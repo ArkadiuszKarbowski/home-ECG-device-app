@@ -137,7 +137,7 @@ border-image: url(static/background_logo.png);
         </property>
         <property name="styleSheet">
          <string notr="true">border-image: none;
-background-color: rgb(0, 58, 173, 220);
+background-color: rgba(0, 58, 173, 220);
 border-radius:40px;</string>
         </property>
        </widget>

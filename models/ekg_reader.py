@@ -1,6 +1,7 @@
 import serial
 import serial.tools.list_ports
-import queue
+from queue import Queue
+import csv
 
 
 class EkgReader:
@@ -8,14 +9,35 @@ class EkgReader:
         self.baudrate = baudrate
         self.port = self.find_port()
         self.serial = serial.Serial(self.port, baudrate)
-        self.q = ekg_app.q  
+        
+        self.data_queue = Queue()  
+        self.sample_counter = 0
         
     def read(self):
         while True:
             data = self.serial.readline()
             data = data.decode().strip()
-            self.q.put(int(data))
+            self.data_queue.put(data)
             
+    def save_to_csv(self, filename):
+        
+        fieldnames = ['sample','data']
+        
+        with open('data.csv', 'w') as csv_file:
+            csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+            csv_writer.writeheader()
+        
+        while True:
+            with open('data.csv', 'a') as csv_file:
+
+                csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                
+                data = self.data_queue.get() 
+                self.sample_counter += 1
+
+                csv_writer.writerow({'sample': self.sample_counter, 'data': data})
+                
+                
 
     def find_port(self):
         ports = list(serial.tools.list_ports.comports())

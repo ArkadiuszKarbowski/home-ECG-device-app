@@ -5,8 +5,9 @@ from models.ekg_plot import EKGplot
 from PyQt5 import uic
 import queue
 import numpy as np
-import matplotlib.ticker as ticker
+import pandas as pd
 import matplotlib
+from matplotlib.animation import FuncAnimation
 
 matplotlib.use('Qt5Agg')
 
@@ -29,50 +30,75 @@ class EkgApp(QtWidgets.QMainWindow):
         self.plotdata = np.zeros((1,200))
         self.ekg_reader = EkgReader(self)
 
-        self.interval = 30 
+        self.interval = 50
+        self.x_vals = []
+        self.y_vals =[] 
 
         
-        self.update_plot()
+        self.updatePlot()
         self.timer = QtCore.QTimer()
         self.timer.setInterval(self.interval) #msec
-        self.timer.timeout.connect(self.update_plot)
+        self.timer.timeout.connect(self.updatePlot)
         self.timer.start()
-        self.start_worker()
+        self.start_workers()
     
-    def update_plot(self):
-        try:
-            data=[0]
-            
-            while True:
-                try: 
-                    data = self.q.get_nowait()
-                except queue.Empty:
-                    break
-                shift = len(data)
-                self.plotdata = np.roll(self.plotdata, -shift,axis = 0)
-                self.plotdata[-shift:,:] = data
-                self.ydata = self.plotdata[:]
-                self.canvas.axes.set_facecolor((0,0,0))
+
+
+    def updatePlot(self):
+        
+        data = pd.read_csv('data.csv')
+        x = data['sample']
+        y = data['data']
+        
+        self.canvas.axes.clear()
+        self.canvas.axes.plot(x, y, label='Ekg signal')
+        self.canvas.axes.legend(loc='upper left')
+        self.canvas.axes.set_xlabel('Sample')
+        self.canvas.axes.set_ylabel('Data')
+
+        self.canvas.draw()
+        self.canvas.show()
+
+
+
+
+
+    # def update_plot(self):
+    #     try:
+    #         data=[0]
+    #         while True:
+    #             try:
+
+    #                 data = self.q.get_nowait()
+    #             except queue.Empty:
+    #                 break
+                        
+
+
+
+    #             shift = len(data)
+    #             self.plotdata = np.roll(self.plotdata, -shift,axis = 0)
+    #             self.plotdata[-shift:,:] = data
+    #             self.ydata = self.plotdata[:]
+    #             self.canvas.axes.set_facecolor((0,0,0))
                 
         
-                if self.reference_plot is None:
-                    plot_refs = self.canvas.axes.plot( self.ydata, color=(0,1,0.29))
-                    self.reference_plot = plot_refs[0]				
-                else:
-                    self.reference_plot.set_ydata(self.ydata)
+    #             if self.reference_plot is None:
+    #                 plot_refs = self.canvas.axes.plot( self.ydata, color=(0,1,0.29))
+    #                 self.reference_plot = plot_refs[0]				
+    #             else:
+    #                 self.reference_plot.set_ydata(self.ydata)
 
-            
-            self.canvas.axes.yaxis.grid(True,linestyle='--')
-            start, end = self.canvas.axes.get_ylim()
-            self.canvas.axes.yaxis.set_ticks(np.arange(start, end, 0.1))
-            self.canvas.axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%0.1f'))
-            self.canvas.axes.set_ylim( ymin=-0.5, ymax=0.5)		
-            self.canvas.draw()
-        except:
-            pass
-    def start_worker(self):
-        worker = Worker(self.ekg_reader.read)
-        self.threadpool.start(worker)
+                
+    #     except:
+    #         pass
+    
+    def start_workers(self):
+        saver = Worker(self.ekg_reader.save_to_csv, 'data.csv')
+        reader = Worker(self.ekg_reader.read)
+
+        self.threadpool.start(reader)
+        self.threadpool.start(saver)
     
     
 
