@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1039</width>
-    <height>642</height>
+    <width>1040</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,14 +19,17 @@
   <property name="windowTitle">
    <string>EKG App</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">border-image: none;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>1001</width>
-      <height>611</height>
+      <x>20</x>
+      <y>15</y>
+      <width>1000</width>
+      <height>610</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -43,12 +46,12 @@ border-image: url(static/background_logo.png);
     <property name="title">
      <string/>
     </property>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>45</x>
        <y>20</y>
-       <width>846</width>
+       <width>941</width>
        <height>562</height>
       </rect>
      </property>
@@ -120,27 +123,6 @@ border-image: url(static/background_logo.png);
          </size>
         </property>
        </spacer>
-      </item>
-      <item row="3" column="1" colspan="3">
-       <widget class="QWidget" name="Signal_bckgrnd" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>790</width>
-          <height>330</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>3</width>
-          <height>1</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border-image: none;
-background-color: rgba(0, 58, 173, 220);
-border-radius:40px;</string>
-        </property>
-       </widget>
       </item>
       <item row="1" column="3">
        <spacer name="horizontalSpacer_2">
