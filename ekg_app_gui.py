@@ -96,7 +96,7 @@ class Ui_EKGApp(object):
         self.ekg_button.setAutoDefault(False)
         self.ekg_button.setDefault(False)
         self.ekg_button.setObjectName("ekg_button")
-        self.spo2_button = QtWidgets.QPushButton(self.widget)
+        self.spo2_button = QPushButton(self.widget)
         self.spo2_button.setGeometry(QtCore.QRect(30, 80, 320, 50))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)

@@ -7,6 +7,7 @@ import pandas as pd
 import matplotlib
 from glowing_buttons.custom_buttons import *
 from ekg_app_gui import *
+from models.plot_thread import PlotThread
 matplotlib.use('Qt5Agg')
 
 class EkgApp(QtWidgets.QMainWindow):
@@ -28,6 +29,7 @@ class EkgApp(QtWidgets.QMainWindow):
         self.q = queue.Queue(maxsize=20)
         
         self.ui.ekg_button.setObjectTheme(13)
+        self.ui.spo2_button.setObjectTheme(3)
         self.ui.ekg_button.clicked.connect(self.ekg_btn_clicked)
           
         self.initializePlot()
@@ -61,16 +63,22 @@ class EkgApp(QtWidgets.QMainWindow):
         self.canvas.show()
 
     def start_plot(self):
-        self.timer = QtCore.QTimer()
-        self.timer.setInterval(100) #msec
-        self.timer.timeout.connect(self.updatePlot)
-        self.timer.start()
+        plot_thread = PlotThread(self)
+        plot_thread.start()
+        
+    
     
     def ekg_btn_clicked(self):
-        updater = Worker(self.start_plot)
-        self.threadpool.start(updater)
-        # self.ekg_reader = EkgReader(self)
+        self.start_plot()
+        # self.updater = Worker(self.start_plot)
+        # self.timer = QtCore.QTimer()
+        # self.timer.setInterval(100) # msec
+        # self.timer.timeout.connect(self.updater.run)
+        # self.timer.start()
+        
+        # # self.ekg_reader = EkgReader(self)
         # self.start_workers()
+        # self.timer.start()
         
     def start_workers(self):
         saver = Worker(self.ekg_reader.save_to_csv, 'data.csv')
@@ -78,6 +86,7 @@ class EkgApp(QtWidgets.QMainWindow):
 
         self.threadpool.start(reader)
         self.threadpool.start(saver)
+        
     
     
 
