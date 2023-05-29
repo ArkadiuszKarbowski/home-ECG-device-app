@@ -70,15 +70,8 @@ class EkgApp(QtWidgets.QMainWindow):
     
     def ekg_btn_clicked(self):
         self.start_plot()
-        # self.updater = Worker(self.start_plot)
-        # self.timer = QtCore.QTimer()
-        # self.timer.setInterval(100) # msec
-        # self.timer.timeout.connect(self.updater.run)
-        # self.timer.start()
-        
-        # # self.ekg_reader = EkgReader(self)
-        # self.start_workers()
-        # self.timer.start()
+        self.ekg_reader = EkgReader(self)
+        self.start_workers()
         
     def start_workers(self):
         saver = Worker(self.ekg_reader.save_to_csv, 'data.csv')
