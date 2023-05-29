@@ -1,7 +1,6 @@
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib
-import pandas as pd
 matplotlib.use('Qt5Agg')
 
 class EKGplot(FigureCanvas):
