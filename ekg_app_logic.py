@@ -28,16 +28,14 @@ class EkgApp(QtWidgets.QMainWindow):
         self.reference_plot = None
         self.q = queue.Queue(maxsize=20)
         
-        self.ui.ekg_button.setObjectTheme(13)
-        self.ui.spo2_button.setObjectTheme(3)
+        applyAnimationThemeStyle(self.ui.ekg_button, 13)
+        applyAnimationThemeStyle(self.ui.spo2_button, 13)
+
         self.ui.ekg_button.clicked.connect(self.ekg_btn_clicked)
           
         self.initializePlot()
-        self.timer = QtCore.QTimer()
-        self.timer.setInterval(100) #msec
-        self.timer.timeout.connect(self.updatePlot)
-        # self.start_workers()
-        # self.ekg_reader = EkgReader(self)
+        self.ekg_reader = EkgReader(self)
+
 
 
     def initializePlot(self):
@@ -70,7 +68,6 @@ class EkgApp(QtWidgets.QMainWindow):
     
     def ekg_btn_clicked(self):
         self.start_plot()
-        self.ekg_reader = EkgReader(self)
         self.start_workers()
         
     def start_workers(self):

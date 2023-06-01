@@ -6,5 +6,11 @@ class PlotThread(QtCore.QThread):
 
     def run(self):
         while True:
+            self.counter += 1
+            if self.counter % 2 == 0:
+                self.stop()
+            
             self.parent().updatePlot()
-            self.sleep(1)
+            self.msleep(200)
+            
+            

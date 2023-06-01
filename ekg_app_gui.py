@@ -13,10 +13,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from glowing_buttons.custom_buttons import *
 
 
+
 class Ui_EKGApp(object):
     def setupUi(self, EKGApp):
         EKGApp.setObjectName("EKGApp")
-        EKGApp.resize(1166, 886)
+        EKGApp.resize(1180, 880)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -26,7 +27,7 @@ class Ui_EKGApp(object):
         self.centralwidget = QtWidgets.QWidget(EKGApp)
         self.centralwidget.setObjectName("centralwidget")
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(20, 15, 1131, 841))
+        self.groupBox.setGeometry(QtCore.QRect(20, 20, 1140, 840))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -38,7 +39,7 @@ class Ui_EKGApp(object):
         self.groupBox.setTitle("")
         self.groupBox.setObjectName("groupBox")
         self.layoutWidget = QtWidgets.QWidget(self.groupBox)
-        self.layoutWidget.setGeometry(QtCore.QRect(20, 20, 1081, 821))
+        self.layoutWidget.setGeometry(QtCore.QRect(20, 10, 1100, 820))
         self.layoutWidget.setObjectName("layoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -81,7 +82,7 @@ class Ui_EKGApp(object):
         self.widget.setStyleSheet("border-image: none;\n")
         self.widget.setObjectName("widget")
         self.ekg_button = QPushButton(self.widget)
-        self.ekg_button.setGeometry(QtCore.QRect(30, 10, 320, 50))
+        self.ekg_button.setGeometry(QtCore.QRect(30, 10, 340, 50))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -97,7 +98,7 @@ class Ui_EKGApp(object):
         self.ekg_button.setDefault(False)
         self.ekg_button.setObjectName("ekg_button")
         self.spo2_button = QPushButton(self.widget)
-        self.spo2_button.setGeometry(QtCore.QRect(30, 80, 320, 50))
+        self.spo2_button.setGeometry(QtCore.QRect(30, 80, 340, 50))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -108,8 +109,7 @@ class Ui_EKGApp(object):
         font.setBold(True)
         font.setWeight(75)
         self.spo2_button.setFont(font)
-        self.spo2_button.setStyleSheet("border-image: none;\n"
-"")
+        
         self.spo2_button.setObjectName("spo2_button")
         self.gridLayout.addWidget(self.widget, 4, 1, 3, 1)
         EKGApp.setCentralWidget(self.centralwidget)

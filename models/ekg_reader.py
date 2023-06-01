@@ -15,12 +15,20 @@ class EkgReader:
 
     
     def read(self):
+        if self.port is None:
+            print("Brak dostępnego portu szeregowego. Nie można rozpocząć odczytu. \n")
+            return
+        
         while True:
             data = self.serial.readline()
             data = data.decode().strip()
             self.data_queue.put(data)
+
             
     def save_to_csv(self, filename):
+        if self.port is None:
+            print("Brak dostępnego portu szeregowego. Nie można rozpocząć zapisu.")
+            return
         
         fieldnames = ['sample','data']
         
@@ -43,7 +51,8 @@ class EkgReader:
     def find_port(self):
         ports = list(serial.tools.list_ports.comports())
         if len(ports) == 0:
-            raise ValueError("Nie znaleziono żadnego portu szeregowego.")
+            print("Nie znaleziono żadnego portu szeregowego.")
+            return None
         elif len(ports) > 1:
             print("Wykryto więcej niż jeden port szeregowy. Wybierz numer portu:")
             for i, port in enumerate(ports):
